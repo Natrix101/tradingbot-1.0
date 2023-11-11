@@ -1,1 +1,45 @@
 
+//@version=5
+indicator(title="Sunset candles V2.8", shorttitle="Sunset candles", overlay=true)
+
+ShowGradient = input.bool(false, title = "Show the gradient of the volume", tooltip = "Each color represents half of a 400 periods moving average of the volumes. Grays indicate under the 400 MA (low volumes). Bright yellow represents above 7 times the 400 MA (very high volumes). See how the volume evolves!")
+
+// Choosing levels of volume --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ma0 = ta.sma(volume, 400)
+ma1 = ma0 * 0.5
+ma2 = ma0 * 1
+ma3 = ma0 * 1.5
+ma4 = ma0 * 2
+ma5 = ma0 * 2.5
+ma6 = ma0 * 3
+ma7 = ma0 * 3.5
+ma8 = ma0 * 4
+ma9 = ma0 * 4.5
+ma10 = ma0 * 5
+ma11 = ma0 * 5.5
+ma12 = ma0 * 6
+ma13 = ma0 * 6.5
+ma14 = ma0 * 7
+
+// Candles colors (Suggested background color: #0a0c12)------------------------------------------------------------------------------------------------------------------------------------------
+SunsetColors = volume < ma1 ? #2a2a2a : volume < ma2 ? #353535 : volume < ma3 ? #140c6a : volume < ma4 ? #1b108b : volume < ma5 ? #2f1085 : volume < ma6 ? #4c1072 : volume < ma7 ? #6d0f5d : volume < ma8 ? #910e45 : volume < ma9 ? #bc0c29 : volume < ma10 ? #e80b0c : volume < ma11 ? #f65205 : volume < ma12 ? #fe8001 : volume < ma13 ? #fca000 : volume < ma14 ? #f7c601 : volume > ma14 ? #f5e325 : #7be053
+barcolor(SunsetColors)
+
+// Gradient table -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+float Gradient_transp = ShowGradient==true ? 0 : 100
+var table panel = table.new("bottom_right", 15, 1)
+table.cell(panel, 0, 0, "0.5", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#353535, Gradient_transp))
+table.cell(panel, 1, 0, "1", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#525252, Gradient_transp))
+table.cell(panel, 2, 0, "1.5", width=2, text_color = color.new(#868686, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#140c6a, Gradient_transp))
+table.cell(panel, 3, 0, "2", width=2, text_color = color.new(#868686, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#1b108b, Gradient_transp))
+table.cell(panel, 4, 0, "2.5", width=2, text_color = color.new(#868686, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#2f1085, Gradient_transp))
+table.cell(panel, 5, 0, "3", width=2, text_color = color.new(#868686, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#4c1072, Gradient_transp))
+table.cell(panel, 6, 0, "3.5", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#6d0f5d, Gradient_transp))
+table.cell(panel, 7, 0, "4", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#910e45, Gradient_transp))
+table.cell(panel, 8, 0, "4.5", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#bc0c29, Gradient_transp))
+table.cell(panel, 9, 0, "5", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#e80b0c, Gradient_transp))
+table.cell(panel, 10, 0, "5.5", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#f65205, Gradient_transp))
+table.cell(panel, 11, 0, "6", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#fe8001, Gradient_transp))
+table.cell(panel, 12, 0, "6.5", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#fca000, Gradient_transp))
+table.cell(panel, 13, 0, "7", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_right, bgcolor = color.new(#f7c601, Gradient_transp))
+table.cell(panel, 14, 0, "+", width=2, text_color = color.new(#000000, Gradient_transp), text_size=size.small, text_halign=text.align_left, bgcolor = color.new(#f5e325, Gradient_transp))
